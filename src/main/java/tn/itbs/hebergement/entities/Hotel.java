@@ -1,5 +1,6 @@
 package tn.itbs.hebergement.entities;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +21,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor @AllArgsConstructor
-public class Hotel {
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+public class Hotel implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,8 +47,8 @@ public class Hotel {
 	private Collection<ContactHotel> contacts;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Collection<Chambre> chambres;
-	@OneToOne
-	private PlanningTarif planningTrafif;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Collection<PlanningTarif> planningTarif;
 	
 	
 	
